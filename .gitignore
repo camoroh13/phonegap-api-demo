@@ -1,0 +1,5 @@
+.cordova
+.idea
+./platforms/ios
+./merges/ios
+
