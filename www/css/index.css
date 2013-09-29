@@ -31,3 +31,17 @@ body {
     min-height: 1.4em;
     margin: 1.1em 30% .5em;
 }
+
+.ui-panel{
+    width: 18em;
+}
+
+.ui-panel-animate.ui-panel-content-wrap-position-left.ui-panel-content-wrap-open.ui-panel-content-wrap-display-reveal {
+    -webkit-transform: translate3d(18em,0,0);
+    -moz-transform: translate3d(18em,0,0);
+    transform: translate3d(18em,0,0);
+}
+
+.ui-header > .ui-btn-icon-notext {
+    top: 1.1em;
+}
