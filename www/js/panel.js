@@ -1,41 +1,51 @@
-$(document).on("pageinit", function () {
+$(document).on("pageinit", "[data-role='page']", function () {
 
     var viewport = {
         width: $(window).width(),
         height: $(window).height()
     };
+    var id = $(this).attr("id");
 
-    console.log(viewport.width);
     if (window.innerWidth > 560) {
-        window.setTimeout(openPanel, 1);
+        window.setTimeout(function() {
+            openPanel("#panel-" + id);
+        }, 5);
+    }
+
+});
+
+$(document).on("pageshow", "[data-role='page']", function () {
+    var id = $(this).attr("id");
+    if ($.mobile.activePage.jqmData("panel-" + id) !== "open") {
+       // $("#panel-" + id).panel("open");
     }
 
 });
 
 $(document).on("pagecreate", "#index", function () {
-    createPanel();
-    createMenuButton();
-    $(document).on("swiperight", "#index", function (e) {
-
-        if ($.mobile.activePage.jqmData("panel") !== "open") {
-            $("#panel").panel("open");
-        }
-    });
+    createPanel("index");
+    createMenuButton("index");
 });
 
 $(document).on("pagecreate", "#accelerometer", function () {
-    createPanel();
-    createMenuButton();
+    createPanel("accelerometer");
+    createMenuButton("accelerometer");
+});
+
+$(document).on("pagecreate", "#camera", function () {
+    createPanel("camera");
+    createMenuButton("camera");
 });
 
 $(document).on("pagecreate", "#capture", function () {
-    createPanel();
-    createMenuButton();
+    createPanel("capture");
+    createMenuButton("capture");
 });
 
-function createMenuButton () {
+function createMenuButton (id) {
+
     var menuButton = $("<a/>", {
-        href : "#panel",
+        href : "#panel-" + id,
         class : "ui-btn-left",
         role: "button"
     });
@@ -43,19 +53,20 @@ function createMenuButton () {
     menuButton.attr("data-role", "button");
     menuButton.attr("data-iconpos", "notext");
     menuButton.text("Menu");
-    $(":jqmData(role='header')").append(menuButton);
+    $("#" + id +" :jqmData(role='header')").append(menuButton);
 }
 
-function createPanel() {
+function createPanel(id) {
     var panel = $("<div/>", {
-        id: "panel"
+        id: "panel-" + id
     });
     panel.attr("data-role", "panel");
+    panel.attr("data-theme", "b");
 
     var menu = $("<ul/>");
     menu.attr("data-role", "listview");
     var items = [{link: "accelerometer.html", text: "Accelerometer"},
-                    {link: "#", text: "Camera"},
+                    {link: "camera.html", text: "Camera"},
                     {link: "capture.html", text : "Capture"}];
     for (item in items) {
         var li = $("<li/>");
@@ -68,12 +79,16 @@ function createPanel() {
     }
 
     panel.append(menu);
-    $(":jqmData(role='page')").append(panel);
-}
+    $("#"+id).append(panel);
 
-function closePanel() {
-    $("#panel").panel("close");
+    $(document).on("swiperight", "#" + id, function (e) {
+
+        if ($.mobile.activePage.jqmData("panel-" + id) !== "open") {
+            $("#panel-" + id).panel("open");
+        }
+    });
+
 }
-function openPanel() {
-    $("#panel").panel("open");
+function openPanel(id) {
+    $(id).panel("open");
 }
