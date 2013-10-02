@@ -3,7 +3,7 @@
             version="1.0.0"
             xmlns="http://www.w3.org/ns/widgets"
             xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Phonegap API Demo</name>
+    <name>PhonegapAPIDemo</name>
     <description>
         Sample application that show Phonegap API.
     </description>
@@ -11,6 +11,12 @@
         Kostap
     </author>
     <feature name="http://api.phonegap.com/1.0/device" />
+    <feature name="Accelerometer">
+        <param name="android-package" value="org.apache.cordova.AccelListener" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="ios-package" value="CDVAccelerometer" />
+    </feature>
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
     <preference name="target-device" value="universal" />

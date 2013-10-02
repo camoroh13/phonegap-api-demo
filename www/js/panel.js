@@ -1,4 +1,4 @@
-$(document).on("pageinit", "[data-role='page']", function () {
+$(document).on("pageshow", "[data-role='page']", function () {
 
     var viewport = {
         width: $(window).width(),
