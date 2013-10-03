@@ -42,6 +42,11 @@ $(document).on("pagecreate", "#capture", function () {
     createMenuButton("capture");
 });
 
+$(document).on("pagecreate", "#notification", function () {
+    createPanel("notification");
+    createMenuButton("notification");
+});
+
 function createMenuButton (id) {
 
     var menuButton = $("<a/>", {
