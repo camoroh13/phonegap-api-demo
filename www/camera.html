@@ -9,6 +9,7 @@
     <!--link rel="stylesheet" href="css/jquery.mobile.custom.theme.css" /-->
     <link rel="stylesheet" href="css/light-1.3.2.min.css" />
 
+    <script type="text/javascript" src="phonegap.js"></script>
     <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
 
@@ -17,16 +18,6 @@
 
     <title>Camera</title>
 
-    <style>
-        #footerTabs {
-            background: #FFF -webkit-radial-gradient(circle, #FFF, #dee2e4);
-        }
-        .ui-listview sup {
-            font-size: 0.6em;
-            color: #cc0000;
-        }
-    </style>
-
 </head>
 <body>
 <div data-role="page" id="camera">
@@ -34,7 +25,12 @@
         <h1>Camera</h1>
     </div>
     <div data-role="content">
-        Camera   <a href="#panel">Open panel</a>
+        <a href="#" data-role="button" id="capturePhoto">Capture Photo</a>
+        <a href="#" data-role="button" id="captureEditable">Capture Editable Photo</a>
+        <a href="#" data-role="button" id="fromPhotoLibrary">From Photo Library</a>
+        <a href="#" data-role="button" id="fromPhotoAlbum">From Photo Album</a>
+        <img id="image" src="" />
+        <script type="text/javascript" src="js/camera.js"></script>
     </div>
 </div>
 </div>
