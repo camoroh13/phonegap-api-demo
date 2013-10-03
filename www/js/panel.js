@@ -67,7 +67,8 @@ function createPanel(id) {
     menu.attr("data-role", "listview");
     var items = [{link: "accelerometer.html", text: "Accelerometer"},
                     {link: "camera.html", text: "Camera"},
-                    {link: "capture.html", text : "Capture"}];
+                    {link: "capture.html", text : "Capture"},
+                    {link: "notification.html", text: "Notification"}];
     for (item in items) {
         var li = $("<li/>");
         var a = $("<a/>", {
