@@ -55,6 +55,13 @@ notification.initialize(function() {
             showAlert();
         }
     });
+
+    $("#confirm").bind("tap", function() {
+        if (window.cordova) {
+            showConfirm();
+        }
+    });
+
 });
 
 // alert dialog dismissed
@@ -70,5 +77,21 @@ function showAlert() {
         alertDismissed,         // callback
         'Game Over',            // title
         'Done'                  // buttonName
+    );
+}
+
+// process the confirmation dialog result
+function onConfirm(buttonIndex) {
+    $("#confirm .ui-btn-text  ").text('You selected button ' + buttonIndex);
+}
+
+// Show a custom confirmation dialog
+//
+function showConfirm() {
+    navigator.notification.confirm(
+        'You are the winner!', // message
+        onConfirm,            // callback to invoke with index of button pressed
+        'Game Over',           // title
+        'Restart,Exit'         // buttonLabels
     );
 }
