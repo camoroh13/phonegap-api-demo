@@ -68,6 +68,18 @@ notification.initialize(function() {
         }
     });
 
+    $("#beep").bind("tap", function() {
+        if (window.cordova) {
+            playBeep();
+        }
+    });
+
+    $("#vibrate").bind("tap", function() {
+        if (window.cordova) {
+            vibrate();
+        }
+    });
+
 });
 
 // alert dialog dismissed
@@ -88,7 +100,11 @@ function showAlert() {
 
 // process the confirmation dialog result
 function onConfirm(buttonIndex) {
-    $("#confirm .ui-btn-text  ").text('You selected button ' + buttonIndex);
+    if (buttonIndex == 1) {
+        $("#confirm .ui-btn-text  ").text('You selected Restart button ');
+    } else {
+        $("#confirm .ui-btn-text  ").text('You selected Exit button');
+    }
 }
 
 // Show a custom confirmation dialog
@@ -121,4 +137,16 @@ function showPrompt() {
         ['Ok','Cancel'],             // buttonLabels
         'Jane Doe'                 // defaultText
     );
+}
+
+// Beep three times
+//
+function playBeep() {
+    navigator.notification.beep(3);
+}
+
+// Vibrate for 2 seconds
+//
+function vibrate() {
+    navigator.notification.vibrate(2000);
 }
