@@ -62,6 +62,12 @@ notification.initialize(function() {
         }
     });
 
+    $("#prompt").bind("tap", function() {
+        if (window.cordova) {
+            showPrompt();
+        }
+    });
+
 });
 
 // alert dialog dismissed
@@ -93,5 +99,26 @@ function showConfirm() {
         onConfirm,            // callback to invoke with index of button pressed
         'Game Over',           // title
         'Restart,Exit'         // buttonLabels
+    );
+}
+
+// process the promp dialog results
+function onPrompt(results) {
+    if (results.buttonIndex == 2) {
+        $("#prompt .ui-btn-text  ").text("Canceled");
+    } else {
+        $("#prompt .ui-btn-text  ").text(results.input1);
+    }
+}
+
+// Show a custom prompt dialog
+//
+function showPrompt() {
+    navigator.notification.prompt(
+        'Please enter your name',  // message
+        onPrompt,                  // callback to invoke
+        'Registration',            // title
+        ['Ok','Cancel'],             // buttonLabels
+        'Jane Doe'                 // defaultText
     );
 }
