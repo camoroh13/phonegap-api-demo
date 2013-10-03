@@ -101,9 +101,9 @@ function showAlert() {
 // process the confirmation dialog result
 function onConfirm(buttonIndex) {
     if (buttonIndex == 1) {
-        $("#confirm .ui-btn-text  ").text('You selected Restart button ');
+        $("#confirm .ui-btn-text  ").text('You selected Restart');
     } else {
-        $("#confirm .ui-btn-text  ").text('You selected Exit button');
+        $("#confirm .ui-btn-text  ").text('You selected Exit');
     }
 }
 
