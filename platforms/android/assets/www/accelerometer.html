@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+    <link rel="stylesheet" href="css/jquery.mobile.custom.structure.css" />
+    <!--link rel="stylesheet" href="css/jquery.mobile.custom.theme.css" /-->
+    <link rel="stylesheet" href="css/light-1.3.2.min.css" />
+
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile.custom.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script type="text/javascript" src="js/panel.js"></script>
+
+    <script type="text/javascript" charset="utf-8">
+
+        /**
+         * @author: Chris Hjorth, www.chrishjorth.com
+         */
+        var jqmReady = $.Deferred();
+        var pgReady = $.Deferred();
+        var app = {
+            //Callback for when the app is ready
+            callback: null,
+            // Application Constructor
+            initialize: function(callback) {
+                console.log("stage 0");
+                this.callback = callback;
+                var browser = document.URL.match(/^https?:/);
+                if(browser) {
+                    console.log("Is web.");
+                    //In case of web we ignore PG but resolve the Deferred Object to trigger initialization
+                    pgReady.resolve();
+                }
+                else {
+                    console.log("Is not web.");
+                    this.bindEvents();
+                }
+            },
+            bindEvents: function() {
+                document.addEventListener('deviceready', this.onDeviceReady, false);
+            },
+            onDeviceReady: function() {
+                // The scope of 'this' is the event, hence we need to use app.
+                app.receivedEvent('deviceready');
+            },
+            receivedEvent: function(event) {
+//                switch(event) {
+//                    case 'deviceready':
+//                        pgReady.resolve();
+//                        break;
+//                }
+                pgReady.resolve();
+            }
+        };
+        $(document).on("pageinit",  "#accelerometer", function(event, ui) {
+            $("#acc").text("jqmReady1");
+            jqmReady.resolve();
+            $("#acc").text("jqmReady");
+        });
+        /**
+         * General initialization.
+         */
+        $.when(jqmReady, pgReady).then(function() {
+            //Initialization code here
+            if(app.callback) {
+                app.callback();
+            }
+            console.log("Frameworks ready.");
+        });
+
+//
+//        function onDeviceReady() {
+//            document.getElementById("acc").innerText = 'stage 1';
+//            var options = { frequency: 3000 };  // Update every 3 seconds
+//            navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+//            document.getElementById("acc").innerText = 'stage 2';
+//        }
+
+        // onSuccess: Get a snapshot of the current acceleration
+        //
+        function onSuccess(acceleration) {
+            document.getElementById("text").innerText = 'stage 3';
+            console.log('Acceleration X: ' + acceleration.x + '\n' +
+                    'Acceleration Y: ' + acceleration.y + '\n' +
+                    'Acceleration Z: ' + acceleration.z + '\n' +
+                    'Timestamp: '      + acceleration.timestamp + '\n');
+            $("#acc").text('Acceleration X: ' + acceleration.x + '\n' +
+                    'Acceleration Y: ' + acceleration.y + '\n' +
+                    'Acceleration Z: ' + acceleration.z + '\n' +
+                    'Timestamp: '      + acceleration.timestamp + '\n');
+            document.getElementById("text").innerText = 'stage 4';
+        }
+
+        // onError: Failed to get the acceleration
+        //
+        function onError() {
+            document.getElementById("text").innerText = 'stage 3-1';
+            console.log('onError!');
+            $("#text").text("onError");
+            document.getElementById("acc").innerText = 'stage 3-2';
+        }
+
+        app.initialize(function() {
+            $("#text").text('stage 1');
+            console.log("stage 1");
+            var options = { frequency: 3000 };  // Update every 3 seconds
+            if (window.cordova) {
+                navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
+            } else {
+                document.getElementById("acc").innerText = 'stage 2';
+                console.log("stage 2");
+            }
+        });
+
+    </script>
+
+
+    <title>Accelerometer</title>
+
+    <style>
+        #footerTabs {
+            background: #FFF -webkit-radial-gradient(circle, #FFF, #dee2e4);
+        }
+        .ui-listview sup {
+            font-size: 0.6em;
+            color: #cc0000;
+        }
+    </style>
+
+</head>
+<body>
+<div data-role="page" id="accelerometer">
+    <div data-role="header">
+        <h1>Accelerometer</h1>
+    </div>
+    <div data-role="content">
+        <p id="text">Text</p>
+    </div>
+</div>
+</div>
+</body>
+</html>
