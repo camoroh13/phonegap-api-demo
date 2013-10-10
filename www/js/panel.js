@@ -11,7 +11,6 @@ $(document).on("pageshow", "[data-role='page']", function () {
             openPanel("#panel-" + id);
         }, 5);
     }
-
 });
 
 $(document).on("pageshow", "[data-role='page']", function () {
@@ -22,29 +21,10 @@ $(document).on("pageshow", "[data-role='page']", function () {
 
 });
 
-$(document).on("pagecreate", "#index", function () {
-    createPanel("index");
-    createMenuButton("index");
-});
-
-$(document).on("pagecreate", "#accelerometer", function () {
-    createPanel("accelerometer");
-    createMenuButton("accelerometer");
-});
-
-$(document).on("pagecreate", "#camera", function () {
-    createPanel("camera");
-    createMenuButton("camera");
-});
-
-$(document).on("pagecreate", "#capture", function () {
-    createPanel("capture");
-    createMenuButton("capture");
-});
-
-$(document).on("pagecreate", "#notification", function () {
-    createPanel("notification");
-    createMenuButton("notification");
+$(document).on("pagecreate", "[data-role='page']", function () {
+    var id = $(this).attr("id");
+    createPanel(id);
+    createMenuButton(id);
 });
 
 function createMenuButton (id) {
