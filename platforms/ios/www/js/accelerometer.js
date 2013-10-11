@@ -1,40 +1,6 @@
-/**
- * @author: Chris Hjorth, www.chrishjorth.com
- */
-var jqmReady = $.Deferred();
-var pgReady = $.Deferred();
-var accelerometer = {
-    //Callback for when the app is ready
-    callback: null,
-    //Flag for separating web and PhoneGap environments
-    isWeb: true,
-    // Application Constructor
-    initialize: function(callback) {
-        this.callback = callback;
-        var browser = document.URL.match(/^https?:/);
-        if(browser) {
-            //In case of web we ignore PG but resolve the Deferred Object to trigger initialization
-            pgReady.resolve();
-        }
-        else {
-            this.bindEvents();
-        }
-    },
-    bindEvents: function() {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    onDeviceReady: function() {
-        // The scope of 'this' is the event, hence we need to use app.
-        accelerometer.receivedEvent('deviceready');
-    },
-    receivedEvent: function(event) {
-        switch(event) {
-            case 'deviceready':
-                pgReady.resolve();
-                break;
-        }
-    }
-};
+
+jqmReady = $.Deferred();
+
 $(document).on("pageinit",  "#accelerometer", function(event, ui) {
     jqmReady.resolve();
 });
@@ -42,16 +8,10 @@ $(document).on("pageinit",  "#accelerometer", function(event, ui) {
  * General initialization.
  */
 $.when(jqmReady, pgReady).then(function() {
-    //Initialization code here
-    if(accelerometer.callback) {
-        accelerometer.callback();
-    }
+    startWatch()
     console.log("Frameworks ready.");
 });
 
-accelerometer.initialize(function() {
-    startWatch();
-});
 
 // The watch id references the current `watchAcceleration`
 var watchID = null;
